@@ -1,0 +1,24 @@
+.custom-navbar {
+  background-color: rgb(33, 37, 41);
+  height: 70px; /* Match your footer color */
+}
+
+.custom-navbar .nav-link,
+.custom-navbar .navbar-brand,
+.custom-navbar .text-muted {
+  color: #f8f9fa !important; /* Light text */
+}
+
+.custom-navbar .nav-link:hover {
+  color: #5bdde1 !important; /* Optional: bootstrap primary blue on hover */
+}
+
+.custom-navbar .btn-outline-primary {
+  color: #f8f9fa;
+  border-color: #f8f9fa;
+}
+
+.custom-navbar .btn-outline-primary:hover {
+  background-color: #0d6efd;
+  color: white;
+}
