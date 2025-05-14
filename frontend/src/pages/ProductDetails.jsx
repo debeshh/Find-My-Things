@@ -9,16 +9,13 @@ function ProductDetails() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Load user from localStorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
-      parsedUser._id = parsedUser._id || parsedUser.id; // Normalize to _id
+      parsedUser._id = parsedUser._id || parsedUser.id;
       setUser(parsedUser);
-      console.log('🔍 Logged-in user:', parsedUser);
     }
 
-    // Fetch the product details
     const fetchProduct = async () => {
       try {
         const res = await axios.get(`http://localhost:5050/api/lost/${id}`, {
@@ -27,8 +24,6 @@ function ProductDetails() {
           },
         });
         setProduct(res.data);
-        console.log('🧾 Product data:', res.data);
-        console.log('📌 product.user (raw):', res.data.user);
       } catch (err) {
         console.error('Error fetching product:', err.message);
         navigate('/login');
@@ -65,39 +60,55 @@ function ProductDetails() {
   };
 
   const isOwner = user?._id === product?.user?._id || user?._id === product?.user;
-  console.log('✅ Is owner:', isOwner);
 
-  if (!product) return <p>Loading...</p>;
+  if (!product) return <p className="text-center mt-5">Loading...</p>;
 
   return (
-    <div className="container mt-5 mb-5">
-      <div className="row g-4">
+    <div className="container my-5">
+      <div className="row g-5 align-items-start">
+        
+        {/* Image */}
         <div className="col-md-6">
-          <img
-            src={`http://localhost:5050/uploads/${product.image}`}
-            alt={product.title}
-            className="img-fluid rounded"
-          />
+          <div className="card border-0 shadow-sm">
+            <img
+              src={`http://localhost:5050/uploads/${product.image}`}
+              alt={product.title}
+              className="card-img-top rounded"
+            />
+          </div>
         </div>
+
+        {/* Details */}
         <div className="col-md-6">
-          <h2>{product.title}</h2>
-          <p><strong>Description:</strong> {product.description}</p>
-          <p><strong>Category:</strong> {product.category}</p>
+          <h2 className="fw-bold mb-3">{product.title}</h2>
+          <div className="mb-3">
+            <span className="badge bg-secondary me-2">{product.category}</span>
+            <span className={`badge ${product.isFound ? 'bg-success' : 'bg-warning text-dark'}`}>
+              {product.isFound ? 'Found' : 'Still Lost'}
+            </span>
+          </div>
+
+          <p className=""><strong>Description:</strong> {product.description}</p>
           <p><strong>Location:</strong> {product.location}</p>
           <p><strong>Date Lost:</strong> {new Date(product.dateLost).toLocaleDateString()}</p>
-          <p><strong>Contact Info:</strong> {product.contactInfo}</p>
-          <p><strong>Status:</strong> {product.isFound ? 'Found' : 'Still Lost'}</p>
 
+          {/* Contact Section */}
+          <div className="border p-4 rounded bg-light mt-4">
+            <h5 className="fw-semibold mb-2 text-primary">📞 Contact the Finder</h5>
+            <p className="mb-0 text-dark">{product.contactInfo}</p>
+          </div>
+
+          {/* Action Buttons */}
           {isOwner && (
-            <div className="mt-3">
+            <div className="mt-4 d-flex flex-wrap gap-3">
               <button
-                className="btn btn-primary me-2"
+                className="btn btn-outline-primary"
                 onClick={() => navigate(`/edit/${product._id}`)}
               >
                 Edit
               </button>
               <button
-                className="btn btn-danger me-2"
+                className="btn btn-outline-danger"
                 onClick={handleDelete}
               >
                 Delete
