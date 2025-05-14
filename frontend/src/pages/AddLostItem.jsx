@@ -11,6 +11,7 @@ const AddLostItem = () => {
     title: '',
     description: '',
     category: '',
+    customCategory: '',
     location: '',
     dateLost: '',
     contactInfo: '',
@@ -18,6 +19,7 @@ const AddLostItem = () => {
   });
 
   const [uploading, setUploading] = useState(false);
+  const [showCustomCategory, setShowCustomCategory] = useState(false);
 
   // Redirect if not logged in
   useEffect(() => {
@@ -26,8 +28,25 @@ const AddLostItem = () => {
     }
   }, [user, loading, navigate]);
 
+  const categoryOptions = [
+    'Electronics',
+    'Stationery',
+    'Clothing',
+    'Books',
+    'Accessories',
+    'ID Cards',
+    'Keys',
+    'Wallets',
+    'Other',
+  ];
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === 'category') {
+      setShowCustomCategory(value === 'Other');
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -45,10 +64,12 @@ const AddLostItem = () => {
     e.preventDefault();
     if (!user) return;
 
+    const categoryToSubmit = formData.category === 'Other' ? formData.customCategory : formData.category;
+
     const data = new FormData();
     data.append('title', formData.title);
     data.append('description', formData.description);
-    data.append('category', formData.category);
+    data.append('category', categoryToSubmit);
     data.append('location', formData.location);
     data.append('dateLost', formData.dateLost);
     data.append('contactInfo', formData.contactInfo);
@@ -59,7 +80,7 @@ const AddLostItem = () => {
 
     try {
       setUploading(true);
-      const res = await axios.post('http://localhost:5050/api/lost', data, {
+      await axios.post('http://localhost:5050/api/lost', data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'multipart/form-data',
@@ -81,84 +102,101 @@ const AddLostItem = () => {
     <div className="container mt-5 mb-5" style={{ maxWidth: '600px' }}>
       <h2 className="mb-4">Report Lost Item</h2>
       <form onSubmit={handleSubmit} className="bg-dark text-light p-4 rounded shadow">
-  <div className="mb-3">
-    <label className="form-label fw-semibold">Title</label>
-    <input
-      type="text"
-      className="form-control bg-dark text-light border-secondary"
-      name="title"
-      value={formData.title}
-      onChange={handleChange}
-      required
-    />
-  </div>
-  <div className="mb-3">
-    <label className="form-label fw-semibold">Description</label>
-    <textarea
-      className="form-control bg-dark text-light border-secondary"
-      name="description"
-      value={formData.description}
-      onChange={handleChange}
-      rows="3"
-      required
-    />
-  </div>
-  <div className="mb-3">
-    <label className="form-label fw-semibold">Category</label>
-    <input
-      type="text"
-      className="form-control bg-dark text-light border-secondary"
-      name="category"
-      value={formData.category}
-      onChange={handleChange}
-      required
-    />
-  </div>
-  <div className="mb-3">
-    <label className="form-label fw-semibold">Location</label>
-    <input
-      type="text"
-      className="form-control bg-dark text-light border-secondary"
-      name="location"
-      value={formData.location}
-      onChange={handleChange}
-      required
-    />
-  </div>
-  <div className="mb-3">
-    <label className="form-label fw-semibold">Date Lost</label>
-    <input
-      type="date"
-      className="form-control bg-dark text-light border-secondary"
-      name="dateLost"
-      value={formData.dateLost}
-      onChange={handleChange}
-      required
-    />
-  </div>
-  <div className="mb-3">
-    <label className="form-label fw-semibold">Contact Info</label>
-    <input
-      type="text"
-      className="form-control bg-dark text-light border-secondary"
-      name="contactInfo"
-      value={formData.contactInfo}
-      onChange={handleChange}
-      required
-    />
-  </div>
-  <div className="mb-4">
-    <label className="form-label fw-semibold">Image (optional)</label>
-    <input
-      type="file"
-      className="form-control bg-dark text-light border-secondary"
-      onChange={handleFileChange}
-    />
-  </div>
-  <button type="submit" className="btn btn-outline-light fw-bold w-100" disabled={uploading}>
-    {uploading ? 'Submitting...' : 'Submit'}
-  </button>
-</form>
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Title</label>
+          <input
+            type="text"
+            className="form-control bg-dark text-light border-secondary"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Description</label>
+          <textarea
+            className="form-control bg-dark text-light border-secondary"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            rows="3"
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Category</label>
+          <select
+            className="form-select bg-dark text-light border-secondary"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            required
+          >
+            <option value="">-- Select Category --</option>
+            {categoryOptions.map((cat) => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
+          </select>
+        </div>
+        {showCustomCategory && (
+          <div className="mb-3">
+            <label className="form-label fw-semibold">Enter Category</label>
+            <input
+              type="text"
+              className="form-control bg-dark text-light border-secondary"
+              name="customCategory"
+              value={formData.customCategory}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        )}
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Location</label>
+          <input
+            type="text"
+            className="form-control bg-dark text-light border-secondary"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Date Lost</label>
+          <input
+            type="date"
+            className="form-control bg-dark text-light border-secondary"
+            name="dateLost"
+            value={formData.dateLost}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Contact Info</label>
+          <input
+            type="text"
+            className="form-control bg-dark text-light border-secondary"
+            name="contactInfo"
+            value={formData.contactInfo}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="form-label fw-semibold">Image (optional)</label>
+          <input
+            type="file"
+            className="form-control bg-dark text-light border-secondary"
+            onChange={handleFileChange}
+          />
+        </div>
+        <button type="submit" className="btn btn-outline-light fw-bold w-100" disabled={uploading}>
+          {uploading ? 'Submitting...' : 'Submit'}
+        </button>
+      </form>
     </div>
   );
 };
