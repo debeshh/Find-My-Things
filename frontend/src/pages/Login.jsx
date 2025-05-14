@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext'; // ✅ Import AuthContext
 
 const Login = () => {
@@ -55,6 +55,7 @@ const Login = () => {
           Login
         </button>
       </form>
+      <p className='p-3 text-center'>Don't have an account? <Link to="/register">Register</Link></p>
     </div>
   );
 };
