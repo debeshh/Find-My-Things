@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import './ProductCard.css';
 
 function ProductCard({ product }) {
   const {
@@ -24,32 +25,27 @@ function ProductCard({ product }) {
   );
 
   return (
-    <div className="card mb-4 bg-dark text-light border-0 rounded-4 shadow-lg overflow-hidden position-relative">
+    <div className="card custom-product-card bg-dark text-light border-0 rounded-4 shadow-lg overflow-hidden position-relative">
       {statusBadge}
-      <div className="row g-0">
-        <div className="col-md-4">
-          <img
-            src={`http://localhost:5050/uploads/${image}`}
-            className="img-fluid h-100 w-100 object-fit-cover"
-            alt={title}
-            style={{ objectFit: 'cover', minHeight: '100%' }}
-          />
-        </div>
-        <div className="col-md-8">
-          <div className="card-body p-4">
-            <h4 className="card-title text-capitalize fw-semibold mb-3">{title}</h4>
-            <ul className="list-unstyled mb-3 small">
-              <li><strong>Category:</strong> {category}</li>
-              <li><strong>Location:</strong> {location}</li>
-              <li><strong>Date Lost:</strong> {new Date(dateLost).toLocaleDateString()}</li>
-              <li><strong>Type:</strong> {type}</li>
-            </ul>
-            <p className="card-text mb-3"><strong>Description:</strong> {description}</p>
-            <Link to={`/lost/${_id}`} className="btn btn-outline-light w-30">
-              View Details
-            </Link>
-          </div>
-        </div>
+      <div className="image-container">
+        <img
+          src={`http://localhost:5050/uploads/${image}`}
+          alt={title}
+          className="card-img-top object-fit-cover"
+        />
+      </div>
+      <div className="card-body d-flex flex-column p-4">
+        <h4 className="card-title text-capitalize fw-semibold mb-3">{title}</h4>
+        <ul className="list-unstyled mb-3 small">
+          <li><strong>Category:</strong> {category}</li>
+          <li><strong>Location:</strong> {location}</li>
+          <li><strong>Date Lost:</strong> {new Date(dateLost).toLocaleDateString()}</li>
+          <li><strong>Type:</strong> {type}</li>
+        </ul>
+        <p className="card-text mb-3"><strong>Description:</strong> {description}</p>
+        <Link to={`/lost/${_id}`} className="btn btn-outline-light mt-auto">
+          View Details
+        </Link>
       </div>
     </div>
   );
