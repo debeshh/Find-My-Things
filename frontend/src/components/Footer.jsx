@@ -15,7 +15,8 @@ function Footer() {
           <div className="col-md-4 mb-3">
             <h6 className="text-uppercase fw-bold">Quick Links</h6>
             <ul className="list-unstyled">
-              <li><Link to="/" className="footer-link">Lost Products</Link></li>
+              <li><Link to="/" className="footer-link">Home</Link></li>
+              <li><Link to="/lost" className="footer-link">Lost Products</Link></li> 
               <li><Link to="/found" className="footer-link">Found Products</Link></li>
               <li><Link to="/addlostitem" className="footer-link">Report Lost Item</Link></li>
             </ul>
