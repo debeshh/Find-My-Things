@@ -76,9 +76,6 @@ function Navbar() {
               <>
                 <li className="nav-item d-flex align-items-center me-3">
                   <span className="text-muted me-2">Hi, {user.name}</span>
-                  <Link to="/profile" className="nav-link p-0" onClick={closeNavbar}>
-                    <i className="fas fa-user-circle fa-lg text-primary"></i>
-                  </Link>
                 </li>
                 <li className="nav-item">
                   <button

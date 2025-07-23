@@ -29,7 +29,7 @@ function ProductCard({ product }) {
       {statusBadge}
       <div className="image-container">
         <img
-          src={`http://localhost:5050/uploads/${image}`}
+          src={`https://find-my-things.onrender.com/uploads/${image}`}
           alt={title}
           className="card-img-top object-fit-cover"
         />

@@ -8,7 +8,7 @@ const FoundProducts = () => {
   useEffect(() => {
     const fetchFoundProducts = async () => {
       try {
-        const res = await axios.get('http://localhost:5050/api/lost');
+        const res = await axios.get('https://find-my-things.onrender.com/api/lost');
         const found = res.data.filter((product) => product.isFound);
         setFoundProducts(found);
       } catch (err) {

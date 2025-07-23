@@ -21,7 +21,7 @@ function UpdateProductPage() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5050/api/lost/${id}`, {
+        const { data } = await axios.get(`https://find-my-things.onrender.com/api/lost/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },

@@ -80,7 +80,7 @@ const AddLostItem = () => {
 
     try {
       setUploading(true);
-      await axios.post('http://localhost:5050/api/lost', data, {
+      await axios.post('https://find-my-things.onrender.com/api/lost', data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'multipart/form-data',

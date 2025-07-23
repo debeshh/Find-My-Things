@@ -10,7 +10,6 @@ import AddLostItem from './pages/AddLostItem';
 import UpdateProductPage from './pages/UpdateProductPage';
 import LostProducts from './pages/LostProducts';
 import Footer from './components/Footer';
-import ProfilePage from './components/ProfilePage';
 
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
         <Route path="/addlostitem" element={<AddLostItem />} />
         <Route path="/edit/:id" element={<UpdateProductPage />} />
         <Route path="/lost" element={<LostProducts />} />
-        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
       <Footer />
     </Router>

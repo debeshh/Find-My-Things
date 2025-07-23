@@ -18,7 +18,7 @@ function ProductDetails() {
 
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`http://localhost:5050/api/lost/${id}`, {
+        const res = await axios.get(`https://find-my-things.onrender.com/api/lost/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -35,7 +35,7 @@ function ProductDetails() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5050/api/lost/${id}`, {
+      await axios.delete(`https://find-my-things.onrender.com/api/lost/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -48,7 +48,7 @@ function ProductDetails() {
 
   const handleMarkAsFound = async () => {
     try {
-      await axios.patch(`http://localhost:5050/api/lost/${id}/found`, {}, {
+      await axios.patch(`https://find-my-things.onrender.com/api/lost/${id}/found`, {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -71,7 +71,7 @@ function ProductDetails() {
         <div className="col-md-6">
           <div className="card border-0 shadow-sm">
             <img
-              src={`http://localhost:5050/uploads/${product.image}`}
+              src={`https://find-my-things.onrender.com/uploads/${product.image}`}
               alt={product.title}
               className="card-img-top rounded"
             />
