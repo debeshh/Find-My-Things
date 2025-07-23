@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext'; // ✅ Import AuthContext
+import { useAuth } from '../contexts/AuthContext'; //
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth(); // ✅ Destructure login from context
+  const { login } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,9 +17,9 @@ const Login = () => {
         password,
       });
   
-      login(res.data.user); // ✅ Context
-      localStorage.setItem('user', JSON.stringify(res.data.user)); // ✅ LocalStorage
-      localStorage.setItem('token', res.data.token); // ✅ Token
+      login(res.data.user);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+      localStorage.setItem('token', res.data.token);
   
       navigate('/');
     } catch (err) {

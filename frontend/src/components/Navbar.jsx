@@ -1,74 +1,90 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import './Navbar.css';
+import { useState } from 'react';
+import './Navbar.css'; 
 
 function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate('/login');
+    setIsOpen(false);
+  };
+
+  const toggleNavbar = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeNavbar = () => {
+    setIsOpen(false);
   };
 
   return (
     <nav className="navbar navbar-expand-lg custom-navbar shadow-sm">
-      <div className="container">
-        <Link className="navbar-brand fw-bold text-primary" to="/">
+      <div className="container-fluid">
+        <Link className="navbar-brand fw-bold" to="/" onClick={closeNavbar}>
           Find my Thing
         </Link>
 
         <button
           className="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
+          aria-controls="navbarNavDropdown"
+          aria-expanded={isOpen ? 'true' : 'false'}
+          aria-label="Toggle navigation"
+          onClick={toggleNavbar}
         >
           <span className="navbar-toggler-icon" />
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto ms-3">
+        <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNavDropdown">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link" to="/">Home</Link>
+              <Link className="nav-link" to="/" onClick={closeNavbar}>Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/lost">Lost Products</Link>
+              <Link className="nav-link" to="/lost" onClick={closeNavbar}>Lost Products</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/found">Found Products</Link>
+              <Link className="nav-link" to="/found" onClick={closeNavbar}>Found Products</Link>
             </li>
             {user && (
               <li className="nav-item">
-                <Link className="nav-link" to="/addlostitem">Report Lost Item</Link>
+                <Link className="nav-link" to="/addlostitem" onClick={closeNavbar}>Report Lost Item</Link>
               </li>
             )}
           </ul>
 
-          <ul className="navbar-nav ms-auto align-items-center">
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             {!user ? (
               <>
                 <li className="nav-item me-2">
-                  <Link className="btn btn-outline-primary" to="/login">
+                  <Link className="btn btn-outline-primary w-100 mb-2 mb-lg-0" to="/login" onClick={closeNavbar}>
                     Login
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="btn btn-primary" to="/register">
+                  <Link className="btn btn-primary w-100" to="/register" onClick={closeNavbar}>
                     Register
                   </Link>
                 </li>
               </>
             ) : (
               <>
-                <li className="nav-item me-3 d-flex align-items-center">
+                <li className="nav-item d-flex align-items-center me-3">
                   <span className="text-muted me-2">Hi, {user.name}</span>
-                  <Link to="/profile" className="nav-link p-0">
+                  <Link to="/profile" className="nav-link p-0" onClick={closeNavbar}>
                     <i className="fas fa-user-circle fa-lg text-primary"></i>
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <button className="btn btn-outline-danger rounded-pill px-4" onClick={handleLogout}>
+                  <button
+                    className="btn btn-outline-danger rounded-pill px-4 w-100"
+                    onClick={handleLogout}
+                  >
                     Logout
                   </button>
                 </li>

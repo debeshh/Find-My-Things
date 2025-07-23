@@ -7,8 +7,8 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState(''); // Add state for phone number
-  const { login } = useAuth(); // Get login from context
+  const [phone, setPhone] = useState('');
+  const { login } = useAuth(); 
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -18,11 +18,11 @@ const Register = () => {
         name,
         email,
         password,
-        phone, // Include phone number in the request payload
+        phone,
       });
 
-      login(res.data.user); // Store user in context + localStorage
-      localStorage.setItem('token', res.data.token); // Optional: store token if needed
+      login(res.data.user); 
+      localStorage.setItem('token', res.data.token);
 
       navigate('/');
     } catch (err) {

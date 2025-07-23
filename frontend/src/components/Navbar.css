@@ -1,17 +1,25 @@
 .custom-navbar {
   background-color: rgb(33, 37, 41);
-  height: 70px; /* Match your footer color */
+  padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1030;
 }
+
 
 .custom-navbar .nav-link,
 .custom-navbar .navbar-brand,
 .custom-navbar .text-muted {
-  color: #f8f9fa !important; /* Light text */
+  color: #f8f9fa !important;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
 }
 
+
 .custom-navbar .nav-link:hover {
-  color: #5bdde1 !important; /* Optional: bootstrap primary blue on hover */
+  color: #5bdde1 !important;
 }
+
 
 .custom-navbar .btn-outline-primary {
   color: #f8f9fa;
@@ -21,4 +29,22 @@
 .custom-navbar .btn-outline-primary:hover {
   background-color: #0d6efd;
   color: white;
+}
+
+.custom-navbar .btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.custom-navbar .btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+.navbar-toggler {
+  border: 1px solid white;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(248, 249, 250, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }

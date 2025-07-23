@@ -10,7 +10,7 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use(cors()); // Allow all origins
+app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
